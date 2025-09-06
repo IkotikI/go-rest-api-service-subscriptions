@@ -1,0 +1,23 @@
+meta {
+  name: Sum Subscriptions
+  type: http
+  seq: 6
+}
+
+get {
+  url: {{http}}://{{host}}:{{port}}{{path}}/subscription/sum
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+     "user_id": "123e4567-e89b-12d3-a456-426614174000",
+      "start_date": "2023-02-01",
+      "end_date":  "2023-05-01"
+  }
+}
+
+settings {
+  encodeUrl: true
+}

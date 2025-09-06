@@ -1,0 +1,32 @@
+services:
+  subscription_microservice:
+    build: ./
+    command: >
+      sh ./wait-for-postgres.sh db "
+        go run ./tools/migrations/goose.go up &&
+        ./subscription_microservice
+      "
+    ports: 
+     - 8020:8020
+    depends_on:
+      - db
+    environment:
+      - CONFIG_PATH=./config/prod.yaml
+      - DB_USER=${POSTGRES_USER}
+      - DB_PASSWORD=${POSTGRES_PASSWORD}
+      - DB_NAME=${POSTGRES_DB}
+
+  db:
+    restart: always
+    image: postgres:latest
+    volumes:
+    - ./.database/postgres/data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
+    ports:
+      - 5477:5432
+
+volumes:
+  postgres_data:

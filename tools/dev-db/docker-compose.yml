@@ -1,0 +1,17 @@
+services:
+
+  postgres:
+    restart: unless-stopped
+    image: postgres:latest
+    env_file:
+      - ../../.env
+    volumes:
+    - ./.database/postgres/data:/var/lib/postgresql/data
+    # environment:
+    # - POSTGRES_USER=${POSTGRES_USER}
+    # - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    ports:
+    - 5436:5432
+
+volumes:
+  pgadmin-data:

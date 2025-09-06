@@ -1,0 +1,21 @@
+all: false
+dir: "{{.InterfaceDir}}/mocks"
+filename: mock.go
+force-file-write: true
+formatter: gofmt
+include-auto-generated: false
+log-level: info
+structname: "{{.Mock}}{{.InterfaceName}}"
+pkgname: "{{.SrcPackageName}}"
+recursive: false
+require-template-schema-exists: true
+# include-auto-generated: false
+template: testify
+# template-schema: "{{.Template}}.schema.json"
+packages:
+  github.com/ikotiki/go-rest-api-service-subscriptions/internal/storage:
+    config:
+      all: true
+  "github.com/ikotiki/go-rest-api-service-subscriptions/internal/service":
+    config:
+      all: true

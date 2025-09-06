@@ -1,0 +1,19 @@
+meta {
+  name: Get Subcription
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{http}}://{{host}}:{{port}}{{path}}/subscription/{{id}}
+  body: none
+  auth: inherit
+}
+
+vars:pre-request {
+  id: 1
+}
+
+settings {
+  encodeUrl: true
+}

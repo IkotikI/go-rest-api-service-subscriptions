@@ -1,0 +1,480 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "Subscription API service.",
+        "title": "Subscription API",
+        "contact": {},
+        "version": "1.0"
+    },
+    "host": "localhost:8080",
+    "basePath": "/api/v1",
+    "paths": {
+        "/subscription/": {
+            "post": {
+                "description": "Create a new subscription",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "subscriptions"
+                ],
+                "summary": "Create Subscription",
+                "parameters": [
+                    {
+                        "description": "subscription object",
+                        "name": "subscription",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/microservice.Subscription"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/handler.respSuc"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "obj": {
+                                            "type": "integer",
+                                            "format": "int64"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/handler.respErr"
+                        }
+                    },
+                    "422": {
+                        "description": "Unprocessable Entity",
+                        "schema": {
+                            "$ref": "#/definitions/handler.respErr"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/handler.respErr"
+                        }
+                    }
+                }
+            }
+        },
+        "/subscription/query": {
+            "get": {
+                "description": "Get Subscriptions by a query",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "subscriptions"
+                ],
+                "summary": "Get Subscriptions",
+                "parameters": [
+                    {
+                        "description": "query arguments",
+                        "name": "query",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/service.SubscriptionQueryArgs"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/handler.respSuc"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "obj": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/definitions/microservice.Subscription"
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/handler.respErr"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/handler.respErr"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/handler.respErr"
+                        }
+                    }
+                }
+            }
+        },
+        "/subscription/sum": {
+            "get": {
+                "description": "Sum Subscriptions by a query",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "subscriptions"
+                ],
+                "summary": "Sum Subscriptions price",
+                "parameters": [
+                    {
+                        "description": "query arguments",
+                        "name": "query",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/service.SubscriptionQueryArgs"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/handler.resp"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "obj": {
+                                            "type": "integer"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/handler.respErr"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/handler.respErr"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/handler.respErr"
+                        }
+                    }
+                }
+            }
+        },
+        "/subscription/{id}": {
+            "get": {
+                "description": "Get subscription by its id",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "subscriptions"
+                ],
+                "summary": "Subscription By ID",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/handler.respSuc"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "obj": {
+                                            "$ref": "#/definitions/microservice.Subscription"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/handler.respErr"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/handler.respErr"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/handler.respErr"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "Update the subscription",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "subscriptions"
+                ],
+                "summary": "Update Subscription",
+                "parameters": [
+                    {
+                        "description": "subscription object",
+                        "name": "subscription",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/microservice.Subscription"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/handler.respSucNoObj"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/handler.respErr"
+                        }
+                    },
+                    "422": {
+                        "description": "Unprocessable Entity",
+                        "schema": {
+                            "$ref": "#/definitions/handler.respErr"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/handler.respErr"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Delete a new subscription",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "subscriptions"
+                ],
+                "summary": "Delete Subscription",
+                "responses": {
+                    "204": {
+                        "description": "No Content",
+                        "schema": {
+                            "$ref": "#/definitions/handler.respSucNoObj"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/handler.respErr"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/handler.respErr"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/handler.respErr"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "handler.resp": {
+            "type": "object",
+            "properties": {
+                "msg": {
+                    "description": "error message",
+                    "type": "string"
+                },
+                "obj": {},
+                "success": {
+                    "description": "true or false",
+                    "type": "boolean"
+                }
+            }
+        },
+        "handler.respErr": {
+            "type": "object",
+            "properties": {
+                "msg": {
+                    "type": "string",
+                    "example": "error message"
+                },
+                "success": {
+                    "type": "boolean",
+                    "example": false
+                }
+            }
+        },
+        "handler.respSuc": {
+            "type": "object",
+            "properties": {
+                "msg": {
+                    "type": "string",
+                    "example": ""
+                },
+                "obj": {},
+                "success": {
+                    "type": "boolean",
+                    "example": true
+                }
+            }
+        },
+        "handler.respSucNoObj": {
+            "type": "object",
+            "properties": {
+                "msg": {
+                    "type": "string",
+                    "example": ""
+                },
+                "success": {
+                    "type": "boolean",
+                    "example": true
+                }
+            }
+        },
+        "microservice.Subscription": {
+            "type": "object",
+            "required": [
+                "monthly_price",
+                "service_name",
+                "start_date",
+                "user_id"
+            ],
+            "properties": {
+                "end_date": {
+                    "$ref": "#/definitions/storage.Date"
+                },
+                "monthly_price": {
+                    "type": "integer"
+                },
+                "service_name": {
+                    "type": "string"
+                },
+                "start_date": {
+                    "$ref": "#/definitions/storage.Date"
+                },
+                "user_id": {
+                    "type": "string"
+                }
+            }
+        },
+        "service.Order": {
+            "type": "object",
+            "properties": {
+                "order": {
+                    "type": "string",
+                    "example": "ASC"
+                },
+                "order_by": {
+                    "type": "string",
+                    "example": "user_id"
+                }
+            }
+        },
+        "service.SubscriptionQueryArgs": {
+            "type": "object",
+            "properties": {
+                "end_date": {
+                    "type": "string",
+                    "example": "2006-01-02"
+                },
+                "order": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/service.Order"
+                    }
+                },
+                "service_name": {
+                    "type": "string",
+                    "example": "Yandex Taxi"
+                },
+                "start_date": {
+                    "type": "string",
+                    "example": "2006-01-02"
+                },
+                "user_id": {
+                    "type": "string",
+                    "example": "123e4567-e89b-12d3-a456-426614174000"
+                }
+            }
+        },
+        "storage.Date": {
+            "type": "object",
+            "properties": {
+                "time": {
+                    "type": "string"
+                },
+                "valid": {
+                    "type": "boolean"
+                }
+            }
+        }
+    },
+    "securityDefinitions": {
+        "BasicAuth": {
+            "type": "basic"
+        }
+    }
+}

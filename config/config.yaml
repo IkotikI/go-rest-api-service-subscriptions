@@ -1,0 +1,19 @@
+env: "debug"
+
+db:
+  driver: "postgres"
+  username: "postgres"
+  host: "localhost"
+  port: "5436"
+  dbname: "microservice_subscriptions"
+  sslmode: "disable"
+
+http_server:
+  debug: true
+  auth: true
+  addr: "127.0.0.1:8080"
+  path: "/"
+  timeout: 4s
+  idle_timeout: 30s
+  users:
+    - admin:secret

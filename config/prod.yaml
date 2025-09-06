@@ -1,0 +1,17 @@
+env: "info"
+
+db:
+  driver: "postgres"
+  username: "microservice"
+  host: "db"
+  port: "5432"
+  dbname: "microservice_subscriptions"
+  sslmode: "disable"
+
+http_server:
+  debug: true
+  auth: true
+  addr: "0.0.0.0:8020"
+  path: "/"
+  timeout: 4s
+  idle_timeout: 30s

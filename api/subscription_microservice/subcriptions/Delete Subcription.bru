@@ -1,0 +1,19 @@
+meta {
+  name: Delete Subcription
+  type: http
+  seq: 4
+}
+
+delete {
+  url: {{http}}://{{host}}:{{port}}{{path}}/subscription/{{id}}
+  body: none
+  auth: inherit
+}
+
+vars:pre-request {
+  id: 1
+}
+
+settings {
+  encodeUrl: true
+}

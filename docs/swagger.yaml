@@ -1,0 +1,309 @@
+basePath: /api/v1
+definitions:
+  handler.resp:
+    properties:
+      msg:
+        description: error message
+        type: string
+      obj: {}
+      success:
+        description: true or false
+        type: boolean
+    type: object
+  handler.respErr:
+    properties:
+      msg:
+        example: error message
+        type: string
+      success:
+        example: false
+        type: boolean
+    type: object
+  handler.respSuc:
+    properties:
+      msg:
+        example: ""
+        type: string
+      obj: {}
+      success:
+        example: true
+        type: boolean
+    type: object
+  handler.respSucNoObj:
+    properties:
+      msg:
+        example: ""
+        type: string
+      success:
+        example: true
+        type: boolean
+    type: object
+  microservice.Subscription:
+    properties:
+      end_date:
+        $ref: '#/definitions/storage.Date'
+      monthly_price:
+        type: integer
+      service_name:
+        type: string
+      start_date:
+        $ref: '#/definitions/storage.Date'
+      user_id:
+        type: string
+    required:
+    - monthly_price
+    - service_name
+    - start_date
+    - user_id
+    type: object
+  service.Order:
+    properties:
+      order:
+        example: ASC
+        type: string
+      order_by:
+        example: user_id
+        type: string
+    type: object
+  service.SubscriptionQueryArgs:
+    properties:
+      end_date:
+        example: "2006-01-02"
+        type: string
+      order:
+        items:
+          $ref: '#/definitions/service.Order'
+        type: array
+      service_name:
+        example: Yandex Taxi
+        type: string
+      start_date:
+        example: "2006-01-02"
+        type: string
+      user_id:
+        example: 123e4567-e89b-12d3-a456-426614174000
+        type: string
+    type: object
+  storage.Date:
+    properties:
+      time:
+        type: string
+      valid:
+        type: boolean
+    type: object
+host: localhost:8080
+info:
+  contact: {}
+  description: Subscription API service.
+  title: Subscription API
+  version: "1.0"
+paths:
+  /subscription/:
+    post:
+      description: Create a new subscription
+      parameters:
+      - description: subscription object
+        in: body
+        name: subscription
+        required: true
+        schema:
+          $ref: '#/definitions/microservice.Subscription'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            allOf:
+            - $ref: '#/definitions/handler.respSuc'
+            - properties:
+                obj:
+                  format: int64
+                  type: integer
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/handler.respErr'
+        "422":
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/handler.respErr'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handler.respErr'
+      summary: Create Subscription
+      tags:
+      - subscriptions
+  /subscription/{id}:
+    delete:
+      description: Delete a new subscription
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: No Content
+          schema:
+            $ref: '#/definitions/handler.respSucNoObj'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/handler.respErr'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/handler.respErr'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handler.respErr'
+      summary: Delete Subscription
+      tags:
+      - subscriptions
+    get:
+      description: Get subscription by its id
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/handler.respSuc'
+            - properties:
+                obj:
+                  $ref: '#/definitions/microservice.Subscription'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/handler.respErr'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/handler.respErr'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handler.respErr'
+      summary: Subscription By ID
+      tags:
+      - subscriptions
+    put:
+      consumes:
+      - application/json
+      description: Update the subscription
+      parameters:
+      - description: subscription object
+        in: body
+        name: subscription
+        required: true
+        schema:
+          $ref: '#/definitions/microservice.Subscription'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handler.respSucNoObj'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/handler.respErr'
+        "422":
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/handler.respErr'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handler.respErr'
+      summary: Update Subscription
+      tags:
+      - subscriptions
+  /subscription/query:
+    get:
+      consumes:
+      - application/json
+      description: Get Subscriptions by a query
+      parameters:
+      - description: query arguments
+        in: body
+        name: query
+        required: true
+        schema:
+          $ref: '#/definitions/service.SubscriptionQueryArgs'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/handler.respSuc'
+            - properties:
+                obj:
+                  items:
+                    $ref: '#/definitions/microservice.Subscription'
+                  type: array
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/handler.respErr'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/handler.respErr'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handler.respErr'
+      summary: Get Subscriptions
+      tags:
+      - subscriptions
+  /subscription/sum:
+    get:
+      consumes:
+      - application/json
+      description: Sum Subscriptions by a query
+      parameters:
+      - description: query arguments
+        in: body
+        name: query
+        required: true
+        schema:
+          $ref: '#/definitions/service.SubscriptionQueryArgs'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/handler.resp'
+            - properties:
+                obj:
+                  type: integer
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/handler.respErr'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/handler.respErr'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handler.respErr'
+      summary: Sum Subscriptions price
+      tags:
+      - subscriptions
+securityDefinitions:
+  BasicAuth:
+    type: basic
+swagger: "2.0"

@@ -1,0 +1,22 @@
+package e
+
+import (
+	"fmt"
+	"strings"
+)
+
+func Wrap(msg string, err error) error {
+	return fmt.Errorf("%s: %w", msg, err)
+}
+
+func WrapIfErr(msg string, err error) error {
+	if err == nil {
+		return nil
+	}
+
+	return Wrap(msg, err)
+}
+
+func HasText(err error, text string) bool {
+	return strings.Contains(err.Error(), text)
+}
