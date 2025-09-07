@@ -72,6 +72,9 @@ func main() {
 	middlewares := []gin.HandlerFunc{}
 
 	if cfg.HTTPServer.Auth {
+		if len(cfg.HTTPServer.Users) == 0 {
+			log.Fatal().Msg("basic auth enabled but no users provided")
+		}
 		log.Info().Msg("basic auth enabled")
 		middlewares = append(middlewares, gin.BasicAuth(cfg.HTTPServer.GetUsers()))
 	}

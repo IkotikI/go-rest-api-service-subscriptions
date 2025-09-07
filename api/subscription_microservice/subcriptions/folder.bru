@@ -4,7 +4,12 @@ meta {
 }
 
 auth {
-  mode: inherit
+  mode: basic
+}
+
+auth:basic {
+  username: admin
+  password: secret
 }
 
 vars:pre-request {

@@ -7,24 +7,29 @@ meta {
 get {
   url: {{http}}://{{host}}:{{port}}{{path}}/subscription/query
   body: json
-  auth: inherit
+  auth: basic
+}
+
+auth:basic {
+  username: admin
+  password: secret
 }
 
 body:json {
   {
-  //     "user_id": "123e4567-e89b-12d3-a456-426614174000",
-      "start_date": "2019-02-01"
-  //     "end_date":  "2024-10-01"  
+      "user_id": "123e4567-e89b-12d3-a456-426614174000",
+  //     "start_date": "2019-02-01",
+  // //     "end_date":  "2024-10-01"  
   //  "order": [
   //      {
-  //      "order": "ASC",
+  //      "order": "DESC",
   //       "order_by": "user_id"
-  //    },
+  //    }
   //     {
   //       "order": "ASC",
   //       "order_by": "service_name"
   //     }
-  //   ]
+    ]
   }
 }
 
